@@ -151,14 +151,22 @@ export default async function handler(req) {
   }
 
   // ── Fetch upstream ─────────────────────────────────────────────────────────
+  // Use a real browser UA — many IPTV/CDN servers block bot user-agents.
   const upstreamHeaders = {
-    'User-Agent': 'Mozilla/5.0 (compatible; LeafTV-Proxy/1.0)',
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
     'Accept': '*/*',
+    'Accept-Language': 'en-US,en;q=0.9',
+    'Accept-Encoding': 'gzip, deflate, br',
+    'Connection': 'keep-alive',
   };
 
   // Forward Range header so byte-range / video-seeking works
   const rangeHeader = req.headers.get('range');
   if (rangeHeader) upstreamHeaders['Range'] = rangeHeader;
+
+  // Forward Origin / Referer from the browser in case the upstream checks them
+  const originHeader = req.headers.get('origin');
+  if (originHeader) upstreamHeaders['Origin'] = originHeader;
 
   let upstream;
   try {
@@ -172,11 +180,15 @@ export default async function handler(req) {
     return new Response(`Upstream fetch failed: ${err.message}`, { status: 502, headers: corsHeaders() });
   }
 
+  // Expose upstream status in a header so browser DevTools can distinguish
+  // "our proxy rejected it" (no X-Upstream-Status) from "upstream rejected it"
+  const debugHeaders = { ...corsHeaders(), 'X-Upstream-Status': String(upstream.status) };
+
   // ── Build response headers ─────────────────────────────────────────────────
   const contentType = upstream.headers.get('content-type') ?? '';
 
   const responseHeaders = {
-    ...corsHeaders(),
+    ...debugHeaders,  // includes CORS + X-Upstream-Status
     'Content-Type': contentType || 'application/octet-stream',
     'X-Proxy-By': 'leaf-tv-proxy',
   };
@@ -185,6 +197,11 @@ export default async function handler(req) {
   for (const h of ['accept-ranges', 'content-range', 'content-length', 'cache-control']) {
     const v = upstream.headers.get(h);
     if (v) responseHeaders[h] = v;
+  }
+
+  // ── Upstream non-2xx: relay status + body for transparency ────────────────
+  if (!upstream.ok && upstream.status !== 206) {
+    return new Response(upstream.body, { status: upstream.status, headers: responseHeaders });
   }
 
   // ── Playlist: rewrite URLs, return buffered text ───────────────────────────
