@@ -164,9 +164,15 @@ export default async function handler(req) {
   const rangeHeader = req.headers.get('range');
   if (rangeHeader) upstreamHeaders['Range'] = rangeHeader;
 
-  // Forward Origin / Referer from the browser in case the upstream checks them
-  const originHeader = req.headers.get('origin');
-  if (originHeader) upstreamHeaders['Origin'] = originHeader;
+  // Forward the client's real IP. Many IPTV streams use IP-locked tokens 
+  // (the IP that requested the .m3u8 must be the same IP requesting the .ts segments).
+  // Because Vercel Edge uses a pool of IPs, the proxy's IP changes between requests.
+  // Passing the client's IP via X-Forwarded-For can help if the upstream respects it.
+  const clientIp = req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip');
+  if (clientIp) {
+    upstreamHeaders['X-Forwarded-For'] = clientIp;
+    upstreamHeaders['X-Real-IP'] = clientIp;
+  }
 
   let upstream;
   try {
