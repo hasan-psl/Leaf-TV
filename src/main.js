@@ -340,7 +340,7 @@ async function initHeavyComponents() {
           infoTitle.textContent = channel.title;
           infoCategory.textContent = channel.category;
           
-          sidebarLeft.classList.remove('open');
+          document.getElementById('sidebar-left')?.classList.remove('open');
           
           // Reset UI state before new stream loads
           streamSettings.style.display = 'none';
