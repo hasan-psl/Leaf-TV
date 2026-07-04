@@ -43,7 +43,7 @@ export class BackgroundSystem {
    * Call once during bootstrap — injects the three layers before #app content.
    * @param {string} imageUrl  - URL of the background image
    */
-  init(imageUrl = '/resources/bg/bg.jpg') {
+  init(imageUrl = 'https://github.com/hasan-psl/Leaf-TV/blob/main/resources/bg/bg.jpg') {
     // Apply CSS custom property for the image URL
     document.documentElement.style.setProperty(
       '--bg-image-url',
