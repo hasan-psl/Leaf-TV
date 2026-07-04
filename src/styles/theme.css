@@ -1,0 +1,57 @@
+:root {
+  /* Base Colors */
+  --bg-dark: #0b0d14;
+  --bg-light: #f5f7fa;
+  
+  /* Typography - Rule: dark bg -> light text, light bg -> dark text */
+  --text-light: #e1e1e6;
+  --text-dark: #1a1d24;
+  
+  /* Accents */
+  --accent-mint: #98ff98;
+  --accent-mint-hover: #b0ffb0;
+  --accent-forest: #228b22;
+  --accent-forest-hover: #2ea32e;
+  
+  /* Default Theme Mapping (Dark Mode) */
+  --theme-bg: var(--bg-dark);
+  --theme-text: var(--text-light);
+  --theme-accent: var(--accent-mint);
+  --theme-accent-hover: var(--accent-mint-hover);
+  
+  /* Liquid Glass Tokens (High Quality Defaults) */
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  --glass-blur: blur(24px);
+  --glass-saturate: saturate(150%);
+  
+  /* Animations */
+  --anim-speed: 200ms;
+  --anim-ease: cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+[data-theme="light"] {
+  --theme-bg: var(--bg-light);
+  --theme-text: var(--text-dark);
+  --theme-accent: var(--accent-forest);
+  --theme-accent-hover: var(--accent-forest-hover);
+  
+  /* Lighter glass for light mode */
+  --glass-bg: rgba(255, 255, 255, 0.5);
+  --glass-border: rgba(255, 255, 255, 0.6);
+  --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+}
+
+/* Eco Mode Overrides - Disable expensive filters and animations */
+[data-eco-mode="true"] {
+  --glass-blur: none;
+  --glass-saturate: none;
+  --anim-speed: 0s;
+  /* Use solid fallback colors with very slight transparency */
+  --glass-bg: rgba(18, 20, 28, 0.98); 
+}
+
+[data-eco-mode="true"][data-theme="light"] {
+  --glass-bg: rgba(245, 247, 250, 0.98);
+}

@@ -1,0 +1,151 @@
+/* ============================================================
+   Leaf-TV — Background System
+   Layer order:
+     z: -1000  .bg-image-layer      (base photo)
+     z: -999   .bg-overlay-layer    (dark gradient)
+     z: -998   .bg-ambient-layer    (falling leaves)
+     z: 0+     UI
+   ============================================================ */
+
+/* Shared layer base */
+.bg-image-layer,
+.bg-overlay-layer,
+.bg-ambient-layer {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* ── 1. Background Image ──────────────────────────────────── */
+.bg-image-layer {
+  z-index: -1000;
+  background-image: var(--bg-image-url);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* Subtle CSS blur — no heavy JS processing */
+  filter: blur(2px) brightness(0.85);
+  /* Scale up slightly so blurred edges don't show */
+  transform: scale(1.04);
+  transform-origin: center;
+  will-change: transform;
+}
+
+/* ── 2. Dark Overlay Gradient ─────────────────────────────── */
+.bg-overlay-layer {
+  z-index: -999;
+  /* Radial vignette + linear gradient for readability */
+  background:
+    radial-gradient(ellipse at center, transparent 30%, rgba(0, 0, 0, 0.55) 100%),
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.50) 0%,
+      rgba(0, 0, 0, 0.20) 40%,
+      rgba(0, 0, 0, 0.20) 60%,
+      rgba(0, 0, 0, 0.65) 100%
+    );
+}
+
+/* Light theme: lighter overlay so the photo reads naturally */
+[data-theme="light"] .bg-overlay-layer {
+  background:
+    radial-gradient(ellipse at center, transparent 30%, rgba(255, 255, 255, 0.30) 100%),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.35) 0%,
+      rgba(255, 255, 255, 0.10) 40%,
+      rgba(255, 255, 255, 0.10) 60%,
+      rgba(255, 255, 255, 0.40) 100%
+    );
+}
+
+/* ── 3. Ambient Animation Layer ───────────────────────────── */
+.bg-ambient-layer {
+  z-index: -998;
+  overflow: hidden;
+}
+
+/* Individual leaf / particle */
+.leaf-particle {
+  position: absolute;
+  top: -60px;
+  width: var(--leaf-w, 18px);
+  height: var(--leaf-h, 18px);
+  opacity: 0;
+  animation:
+    leaf-fall var(--leaf-dur, 12s) var(--leaf-delay, 0s) linear infinite,
+    leaf-sway var(--sway-dur, 4s) var(--leaf-delay, 0s) ease-in-out infinite alternate;
+  will-change: transform, opacity;
+}
+
+/* SVG leaf shape embedded as mask for zero HTTP requests */
+.leaf-particle::before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--leaf-color, rgba(152, 255, 152, 0.55));
+  border-radius: 0% 100% 0% 100% / 0% 100% 0% 100%;
+  transform: rotate(var(--leaf-rot, 30deg));
+  box-shadow: inset 0 0 4px rgba(255, 255, 255, 0.15);
+}
+
+/* Different shape variant (rounder) for odd leaves */
+.leaf-particle.round::before {
+  border-radius: 50% 10% 50% 10% / 50% 10% 50% 10%;
+  transform: rotate(var(--leaf-rot, -20deg));
+}
+
+/* Fall animation — pure vertical drop with slight horizontal drift */
+@keyframes leaf-fall {
+  0%   { transform: translateY(-60px) translateX(0px) rotate(0deg); opacity: 0; }
+  5%   { opacity: var(--leaf-max-opacity, 0.7); }
+  90%  { opacity: var(--leaf-max-opacity, 0.7); }
+  100% { transform: translateY(110vh) translateX(var(--leaf-drift, 40px)) rotate(var(--leaf-spin, 360deg)); opacity: 0; }
+}
+
+/* Sway animation — gentle side-to-side pendulum */
+@keyframes leaf-sway {
+  0%   { margin-left: 0; }
+  100% { margin-left: var(--sway-amount, 30px); }
+}
+
+/* ── Disabled state ───────────────────────────────────────── */
+/* When animation is toggled off via data attribute or eco mode */
+[data-bg-animation="false"] .bg-ambient-layer,
+[data-eco-mode="true"]       .bg-ambient-layer {
+  display: none;
+}
+
+/* Eco mode: also remove blur on bg image for performance */
+[data-eco-mode="true"] .bg-image-layer {
+  filter: brightness(0.75);
+  transform: none;
+}
+
+/* ── Mobile performance guard ─────────────────────────────── */
+@media (max-width: 768px) {
+  /* Reduce blur amount on mobile — cheaper to composite */
+  .bg-image-layer {
+    filter: blur(1px) brightness(0.85);
+    transform: scale(1.02);
+  }
+
+  /* Halve particle opacity on mobile for visual lightness */
+  .leaf-particle {
+    --leaf-max-opacity: 0.45;
+  }
+}
+
+/* Prefer-reduced-motion: kill all animation */
+@media (prefers-reduced-motion: reduce) {
+  .bg-ambient-layer {
+    display: none;
+  }
+  .bg-image-layer {
+    filter: brightness(0.80);
+    transform: none;
+  }
+}
