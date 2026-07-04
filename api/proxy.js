@@ -179,8 +179,7 @@ export default async function handler(req) {
     upstream = await fetch(targetUrl, {
       method: req.method,
       headers: upstreamHeaders,
-      redirect: 'follow',
-      signal: AbortSignal.timeout(15_000),
+      redirect: 'follow'
     });
   } catch (err) {
     return new Response(`Upstream fetch failed: ${err.message}`, { status: 502, headers: corsHeaders() });
