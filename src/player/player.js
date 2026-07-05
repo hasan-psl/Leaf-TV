@@ -1,6 +1,5 @@
 import Hls from 'hls.js';
 import mpegts from 'mpegts.js';
-import { maybeProxyUrl } from '../core/proxy.js';
 
 /**
  * PlayerSystem — dual-engine video player
@@ -56,9 +55,7 @@ export class PlayerSystem {
     this.hideErrorOverlay();
     this._destroyAll();
 
-    // Ensure the URL is routed through the HTTPS proxy (guards against
-    // any stream URL loaded directly, outside of the playlist parser)
-    const streamUrl = maybeProxyUrl(url.trim());
+    const streamUrl = url.trim();
     console.log('[Player] Loading:', streamUrl);
 
     // Route by URL type

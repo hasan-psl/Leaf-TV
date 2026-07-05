@@ -1,5 +1,3 @@
-import { rewritePlaylist } from './proxy.js';
-
 export class PlaylistLoaderSystem {
   constructor(playlistUrl) {
     this.playlistUrl = playlistUrl;
@@ -18,11 +16,8 @@ export class PlaylistLoaderSystem {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const text = await response.text();
-
-      // Rewrite all HTTP stream URLs through the HTTPS proxy before parsing
-      const proxiedText = rewritePlaylist(text, this.playlistUrl);
-
-      this.cache = this.parseM3U(proxiedText);
+      
+      this.cache = this.parseM3U(text);
       console.log(`Parsed ${this.cache.channels.length} channels from playlist`);
       
       return this.cache;
