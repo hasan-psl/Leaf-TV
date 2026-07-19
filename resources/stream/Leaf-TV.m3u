@@ -1,6 +1,6 @@
 <!-- FIFA World Cup 2026 - High Quality -->
-#EXTINF:-1 group-title="FIFA World Cup 2026 - HQ",Fussball TV 1 - Germany [1080p 60FPS English]
-https://fussballtv1.sslstream.workers.dev
+#EXTINF:-1 group-title="FIFA World Cup 2026 - HQ",TSN 4 - Canada [1080p 60FPS English]
+https://raw.githubusercontent.com/hasan-psl/Leaf-TV/refs/heads/main/resources/stream/tsn4.m3u8
 #EXTINF:-1 group-title="FIFA World Cup 2026 - HQ",TSN 1 - Canada [Backup] [1080p 60FPS English]
 http://flystreams.xyz:80/live/martaill/martaill50/267586.ts
 #EXTINF:-1 group-title="FIFA World Cup 2026 - HQ",TSN 4 - Canada [1080p 60FPS English]
