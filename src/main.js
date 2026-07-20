@@ -10,7 +10,7 @@ async function bootstrap() {
   console.log('Bootstrapping Leaf-TV...');
 
   themeController.init();
-  backgroundSystem.init('/resources/bg/bg.jpg');
+  backgroundSystem.init('./resources/bg/bg.jpg');
 
   // Inject UI Structure
   document.querySelector('#app').innerHTML = `
