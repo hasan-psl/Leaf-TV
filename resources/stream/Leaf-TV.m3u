@@ -1,31 +1,7 @@
-<!-- FIFA World Cup 2026 - High Quality -->
-#EXTINF:-1 group-title="FIFA World Cup 2026 - HQ",TSN 4 - Canada [1080p 60FPS English]
-https://raw.githubusercontent.com/hasan-psl/Leaf-TV/refs/heads/main/resources/stream/tsn4.m3u8
-#EXTINF:-1 group-title="FIFA World Cup 2026 - HQ",TSN 1 - Canada [Backup] [1080p 60FPS English]
-http://flystreams.xyz:80/live/martaill/martaill50/267586.ts
-#EXTINF:-1 group-title="FIFA World Cup 2026 - HQ",TSN 4 - Canada [1080p 60FPS English]
-http://geoiptv.one:8880/live/mubeen246/03224222049/98411.m3u8
-#EXTINF:-1 group-title="FIFA World Cup 2026 - HQ",TSN 4 - Canada [Backup] [1080p 60FPS English]
-http://x96.us:8880/live/CREOLINKTV/fBtpm8JAXa/98411.m3u8
-#EXTINF:-1 group-title="FIFA World Cup 2026 - HQ",TSN 4 - Canada [Backup 1] [1080p 60FPS English]
-http://flystreams.xyz:80/live/martaill/martaill50/268437.ts
-#EXTINF:-1 group-title="FIFA World Cup 2026 - HQ",Now Sports 4K (CH-616) [2160p 50FPS English Multi]
-http://starhub.pro/live/farhat-3379/67897-913379/745270.ts
-#EXTINF:-1 group-title="FIFA World Cup 2026 - HQ",FUSSBALL TV [2160p 50FPS German Multi]
-http://starhub.pro/live/farhat-3379/67897-913379/745269.ts
-#EXTINF:-1 group-title="FIFA World Cup 2026 - HQ",Unite8 - Sports 1 - India [1080p 50FPS Hindi]
-http://x96.us:8880/live/CREOLINKTV/fBtpm8JAXa/1062141.m3u8
-#EXTINF:-1 group-title="FIFA World Cup 2026 - HQ",T Sports - Bangladesh [1080p 50FPS English]
-http://x96.us:8880/live/CREOLINKTV/fBtpm8JAXa/858262.m3u8
-#EXTINF:-1 group-title="FIFA World Cup 2026 - HQ",BBC 1 - UK [1080p 50FPS English]
-http://x96.us:8880/live/CREOLINKTV/fBtpm8JAXa/10105.m3u8
-#EXTINF:-1 group-title="FIFA World Cup 2026 - HQ",ITV 1 - UK [1080p 25FPS English]
-http://x96.us:8880/live/CREOLINKTV/fBtpm8JAXa/10111.m3u8
-#EXTINF:-1 group-title="FIFA World Cup 2026 - HQ",SPort TV 5 - Portugal [720p 25FPS Portuguese]
-http://x96.us:8880/live/CREOLINKTV/fBtpm8JAXa/99289.m3u8
-#EXTINF:-1 group-title="FIFA World Cup 2026 - HQ",PTV Sports - Pakistan [1080p 25FPS English]
-http://geoiptv.one:8880/live/mubeen246/03224222049/639414.m3u8
-#EXTINF:-1 group-title="FIFA World Cup 2026 - HQ",PTV Sports - Pakistan [720p 25FPS English]
-http://x96.us:8880/live/CREOLINKTV/fBtpm8JAXa/48601.m3u8
-#EXTINF:-1 group-title="FIFA World Cup 2026 - HQ",PTV Sports - Pakistan [Backup] [720p 25FPS English]
-http://geoiptv.one:8880/live/mubeen246/03224222049/1047376.m3u8
+<!-- Movies -->
+#EXTINF:-1 group-title="Movies",Star Movies HD
+https://url-conv.vercel.app/StarMoviesHD
+#EXTINF:-1 group-title="Movies",Star Movies SELECT HD
+https://url-conv.vercel.app/StarMoviesSELECTHD
+#EXTINF:-1 group-title="Movies",Sony Max HD
+https://url-conv.vercel.app/SonyMaxHD
