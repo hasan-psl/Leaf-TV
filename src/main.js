@@ -17,7 +17,7 @@ async function bootstrap() {
     <header class="glass-navbar">
       <div class="navbar-brand" style="flex: 1;">
         <button class="mobile-menu-btn" id="mobile-menu-toggle">☰</button>
-        <img src="/resources/logo/logo.png" alt="Leaf-TV logo" style="height: 28px; width: auto; display: block;" />
+        <img src="https://github.com/hasan-psl/Leaf-TV/blob/main/resources/logo/logo.png?raw=true" alt="Leaf-TV logo" style="height: 28px; width: auto; display: block;" />
         Leaf-TV
       </div>
       
